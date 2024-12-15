@@ -199,29 +199,53 @@ def question_llm(prompt, context):
         api_url = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
 
         # Construct the full prompt
+        # Construct the full prompt
         full_prompt = f"""
-        Based on the following data analysis, please generate a creative and engaging story. The story should include multiple paragraphs, a clear structure with an introduction, body, and conclusion, and should feel like a well-rounded narrative.
-
-        Context:
-        {context}
-
-        Data Analysis Prompt:
-        {prompt}
-
-        The story should be elaborate and cover the following:
-        - An introduction to set the context.
-        - A detailed body that expands on the data points and explores their significance.
-        - A conclusion that wraps up the analysis and presents any potential outcomes or lessons.
-        - Use transitions to connect ideas and keep the narrative flowing smoothly.
-        - Format the story with clear paragraphs and structure.
+        You are an advanced storytelling assistant. Based on the data analysis provided below, create a detailed README.md file that tells a compelling story. The README should include the following sections:
+        
+        # Data Overview
+        - Briefly describe the dataset, including the source, size, and purpose.
+        - Highlight the type of data (e.g., numerical, categorical) and any interesting features.
+        
+        # Analysis Conducted
+        - Explain the steps taken to analyze the data, such as statistical analysis, correlation studies, or visualizations.
+        - Mention any charts generated (e.g., heatmaps, pair plots, count plots, boxplots).
+        
+        # Key Insights
+        - Summarize the findings.
+        - Highlight any trends, correlations, or anomalies that were discovered.
+        
+        # Implications and Recommendations
+        - Based on the insights, suggest actionable steps or recommendations.
+        
+        # Markdown Structure
+        - Use appropriate Markdown headers (e.g., # Data Overview, ## Insights, etc.) to organize the sections.
+        - Refer to the generated images within the context of the analysis (e.g., ![Correlation Heatmap](correlation_heatmap.png)).
+        
+        # Image References
+        - Describe any images in the context of the analysis.
+        - Use image links such as [![Visualization](path/to/image.png)] with the recommended size of 512x512px.
+        
+        Below is the data structure and analysis:
+        
+        ## Data Structure:
+        {Provide a summary of the dataset, including the number of rows, columns, and key attributes.}
+        
+        ## Analysis Results:
+        {Summarize the insights, key statistics, and any visualizations generated.}
+        
+        ## Generated Images:
+        {List the visualizations, their purpose, and file names, e.g., correlation_heatmap.png, pair_plot.png, etc.}
+        
+        Your task is to craft a professional and visually appealing README.md file that effectively communicates the data analysis.
         """
-
+        
         # Prepare headers
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {token}"
         }
-
+        
         # Prepare the body with the model and prompt
         data = {
             "model": "gpt-4o-mini",  # Specific model for proxy
@@ -232,6 +256,7 @@ def question_llm(prompt, context):
             "max_tokens": 1000,
             "temperature": 0.7
         }
+
 
         # Send the POST request to the proxy
         response = requests.post(api_url, headers=headers, data=json.dumps(data))
