@@ -275,8 +275,13 @@ def main(csv_file):
     print("Outliers detected:")
     print(outliers)
 
-    output_dir = "."
+    # Define the output directory based on the dataset name
+    dataset_name = os.path.splitext(os.path.basename(csv_file))[0]
+    output_dir = os.path.join(dataset_name)
+
+    # Create the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
+
 
     # Visualize the data and check output paths
     heatmap_file, outliers_file, dist_plot_file = visualize_data(corr_matrix, outliers, df, output_dir)
